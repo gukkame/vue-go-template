@@ -1,1 +1,3 @@
-# find-your-outfit
+# Starter Template
+
+## Vue + Tailwind + Vite
