@@ -1,0 +1,14 @@
+## Server template
+There are 2 ways of opening and executing databases. One for SQLite and other for PostgreSQL choose which ever you like better.
+
+For PostgreSQL you can add admin user using specific flags.
+Add with flags admin user ```go run server.go -username=[username] -password=[password] -email=[email@email]```
+
+By default it is set to SQLite
+
+
+## Usage
+- Open terminal
+- Navigate to ./server and run ```go run server.go```
+- Server should be now running on ```http://localhost:8080/```
+
