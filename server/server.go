@@ -1,14 +1,16 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
+	db "server/database"
 	mw "server/middleware"
 	ath "server/services/auth/user-auth"
-	db "server/database"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -22,8 +24,8 @@ func main() {
 	fmt.Println("Server is running...")
 
 	http.HandleFunc("/login", mw.CORS(ath.HandleLogIn))
+	http.HandleFunc("/", mw.CORS(HandleTest))
 
-	
 	// SQLite database
 	db.Database()
 
@@ -99,5 +101,36 @@ func registerAdminUsingFlag() {
 			log.Fatal(err)
 		}
 		os.Exit(0)
+	}
+}
+
+type LogIn struct {
+	Username string
+	Text string
+}
+
+func HandleTest(w http.ResponseWriter, r *http.Request) {
+	if (*r).Method == "OPTIONS" {
+		return
+	}
+
+	switch r.Method {
+	case "POST":
+		w.WriteHeader(http.StatusCreated)
+		reqBody, err := io.ReadAll(r.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+		var recievedData LogIn
+		json.Unmarshal([]byte(reqBody), &recievedData)
+		
+		fmt.Println("Recieved data ", recievedData)
+		recievedData.Text = "Request to server was successfull"
+
+		returnData, _ := json.Marshal(recievedData)
+		w.Write(returnData)
+	default:
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte(`{"error":"LogInError", "message": "Can't find method requested"}`))
 	}
 }

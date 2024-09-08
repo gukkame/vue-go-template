@@ -1,3 +1,3 @@
 <template>
- <div class="h-20 bg-blue-100 flex items-center">The welcome component on main page </div>
+ <div class="h-64 p-4 bg-gray-900 text-white flex justify-center items-center">TheWelcome component on main page </div>
 </template>
