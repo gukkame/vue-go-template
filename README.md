@@ -1,6 +1,6 @@
 # Starter Template
 
-## Vue + Tailwind + Vite
+## Vue + Tailwind + Go + SQLite/PostgreSQL
 
 To run server:
 - Open terminal
